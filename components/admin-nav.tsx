@@ -3,7 +3,6 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Flag } from "lucide-react";
-import { UserButton } from "@clerk/nextjs";
 import { cn } from "@/lib/utils";
 
 export function AdminNav() {
@@ -46,7 +45,6 @@ export function AdminNav() {
             })}
           </div>
         </div>
-        <UserButton  />
       </div>
     </nav>
   );

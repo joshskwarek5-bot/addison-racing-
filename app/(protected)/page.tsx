@@ -2,7 +2,6 @@
 
 import { useQuery } from "convex/react";
 import { api } from "@/convex/_generated/api";
-import { UserButton } from "@clerk/nextjs";
 import { Flag, Users, CheckCircle, ChevronRight, Zap } from "lucide-react";
 import Link from "next/link";
 import { RaceCard } from "@/components/race-card";
@@ -49,7 +48,6 @@ function DashboardContent() {
           </div>
           <div className="flex items-center gap-6">
             <Link href="/races" className="text-sm text-[#6B6B7E] hover:text-[#F0F0F5] transition-colors hidden sm:block">Races</Link>
-            <UserButton />
           </div>
         </div>
       </nav>
