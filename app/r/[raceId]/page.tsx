@@ -3,7 +3,7 @@
 import { useParams } from "next/navigation";
 import { useQuery, useMutation } from "convex/react";
 import { api } from "@/convex/_generated/api";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   MapPin, Calendar, Flag, CheckSquare, Square,
   Navigation, Info, Zap, User, ChevronRight
@@ -14,6 +14,13 @@ import { ItineraryTimeline } from "@/components/itinerary-timeline";
 import { ChecklistCard } from "@/components/checklist-card";
 import { CalendarExport } from "@/components/calendar-export";
 import { formatDateRange, formatDateShort } from "@/lib/utils";
+
+const PHOTOS = [
+  { src: "/addison-1.jpg", alt: "Addison #555 at speed" },
+  { src: "/addison-2.jpg", alt: "Addison #555 corner entry" },
+  { src: "/addison-3.jpg", alt: "Addison Smalley #555 number plate" },
+  { src: "/addison-4.jpg", alt: "Addison #555 full lean" },
+];
 
 const DEFAULT_CHECKLIST = [
   "Sunglasses", "Sunscreen", "Earplugs", "Hat", "Snacks",
@@ -37,6 +44,12 @@ export default function GuestPage() {
 
   // RSVP state
   const [rsvpId, setRsvpId] = useState<Id<"rsvps"> | null>(null);
+  const [activePhoto, setActivePhoto] = useState(0);
+
+  useEffect(() => {
+    const t = setInterval(() => setActivePhoto((p) => (p + 1) % PHOTOS.length), 4000);
+    return () => clearInterval(t);
+  }, []);
   const [rsvpStatus, setRsvpStatus] = useState<RsvpStatus | null>(null);
   const [selectedRaces, setSelectedRaces] = useState<Set<string>>(new Set());
   const [rsvpLoading, setRsvpLoading] = useState(false);
@@ -234,29 +247,55 @@ export default function GuestPage() {
       </section>
 
       {/* ===================== MEET THE RACER ===================== */}
-      <section className="py-0 relative overflow-hidden">
-        <div className="relative h-[420px] sm:h-[520px]">
-          <img
-            src="/addison-555.jpg"
-            alt="Addison #555 cornering at speed"
-            className="absolute inset-0 w-full h-full object-cover object-center"
-          />
-          {/* gradient overlays — left and bottom */}
-          <div className="absolute inset-0 bg-gradient-to-r from-[#0a0a0f] via-[#0a0a0f]/60 to-transparent" />
-          <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a0f] via-transparent to-transparent" />
+      <section className="relative overflow-hidden">
+        <div className="relative h-[480px] sm:h-[580px] lg:h-[640px]">
 
-          <div className="absolute inset-0 flex flex-col justify-end px-8 sm:px-12 pb-12 sm:pb-16 max-w-lg">
+          {/* Photo slides — crossfade */}
+          {PHOTOS.map((photo, i) => (
+            <img
+              key={photo.src}
+              src={photo.src}
+              alt={photo.alt}
+              className="absolute inset-0 w-full h-full object-cover object-center transition-opacity duration-1000"
+              style={{ opacity: i === activePhoto ? 1 : 0 }}
+            />
+          ))}
+
+          {/* Dark gradient overlays */}
+          <div className="absolute inset-0 bg-gradient-to-r from-[#0a0a0f] via-[#0a0a0f]/50 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a0f] via-transparent to-[#0a0a0f]/30" />
+
+          {/* Text content */}
+          <div className="absolute inset-0 flex flex-col justify-end px-6 sm:px-12 pb-10 sm:pb-14">
             <div className="flex items-center gap-2 mb-3">
               <div className="h-px w-6 bg-[#FF4D00]" />
               <span className="text-xs font-jetbrains text-[#FF4D00] uppercase tracking-widest">MRA 2026</span>
             </div>
-            <div className="flex items-baseline gap-3 mb-2">
-              <span className="font-jetbrains font-bold text-[#FF4D00] text-6xl sm:text-7xl leading-none">#555</span>
-              <span className="font-outfit font-800 text-3xl sm:text-4xl text-[#F0F0F5] leading-none">Addison</span>
+            <div className="flex items-baseline gap-3 mb-3">
+              <span className="font-jetbrains font-bold text-[#FF4D00] text-5xl sm:text-7xl leading-none">#555</span>
+              <span className="font-outfit font-800 text-3xl sm:text-4xl text-[#F0F0F5] leading-none">Addison Smalley</span>
             </div>
-            <p className="text-[#6B6B7E] text-sm leading-relaxed max-w-xs">
-              Middleweight Supersport · Middleweight Superbike · Amateur classes. Racing all season on the Suzuki.
+            <p className="text-[#6B6B7E] text-sm leading-relaxed max-w-sm mb-6">
+              MW SS · Middleweight SB · Amateur Middleweight · Amateur Open
             </p>
+
+            {/* Dot navigation */}
+            <div className="flex items-center gap-2">
+              {PHOTOS.map((_, i) => (
+                <button
+                  key={i}
+                  onClick={() => setActivePhoto(i)}
+                  className="transition-all duration-300"
+                  aria-label={`Photo ${i + 1}`}
+                >
+                  <div className={`rounded-full transition-all duration-300 ${
+                    i === activePhoto
+                      ? "w-6 h-2 bg-[#FF4D00]"
+                      : "w-2 h-2 bg-white/30 hover:bg-white/60"
+                  }`} />
+                </button>
+              ))}
+            </div>
           </div>
         </div>
       </section>
