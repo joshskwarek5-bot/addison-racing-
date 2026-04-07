@@ -162,33 +162,37 @@ function RaceDetailContent({ raceId }: { raceId: string }) {
                 <div className="space-y-2">
                   {localMyRaces.map((r, i) => (
                     <div key={i} className="p-3 bg-[#0a0a0f] rounded-xl border border-white/6 space-y-2">
-                      <div className="flex items-center gap-2">
-                        <div className="flex flex-col gap-0.5">
-                          <button type="button" onClick={() => moveMyRace(i, -1)} disabled={i === 0}
-                            className="p-0.5 text-[#6B6B7E] hover:text-[#F0F0F5] disabled:opacity-20 transition-colors">
-                            <ArrowUp className="w-3 h-3" />
-                          </button>
-                          <button type="button" onClick={() => moveMyRace(i, 1)} disabled={i === localMyRaces.length - 1}
-                            className="p-0.5 text-[#6B6B7E] hover:text-[#F0F0F5] disabled:opacity-20 transition-colors">
-                            <ArrowDown className="w-3 h-3" />
+                      <div className="flex flex-col sm:flex-row sm:items-center gap-2">
+                        <div className="flex items-center gap-2 flex-1">
+                          <div className="flex flex-col gap-0.5 flex-shrink-0">
+                            <button type="button" onClick={() => moveMyRace(i, -1)} disabled={i === 0}
+                              className="p-0.5 text-[#6B6B7E] hover:text-[#F0F0F5] disabled:opacity-20 transition-colors">
+                              <ArrowUp className="w-3 h-3" />
+                            </button>
+                            <button type="button" onClick={() => moveMyRace(i, 1)} disabled={i === localMyRaces.length - 1}
+                              className="p-0.5 text-[#6B6B7E] hover:text-[#F0F0F5] disabled:opacity-20 transition-colors">
+                              <ArrowDown className="w-3 h-3" />
+                            </button>
+                          </div>
+                          <Input
+                            placeholder="Race name (e.g. MW SS)"
+                            value={r.name}
+                            onChange={(e) => setLocalMyRaces((arr) => arr.map((x, j) => j === i ? { ...x, name: e.target.value } : x))}
+                            className="flex-1"
+                          />
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <Input
+                            placeholder="Time or TBD"
+                            value={r.estimatedTime}
+                            onChange={(e) => setLocalMyRaces((arr) => arr.map((x, j) => j === i ? { ...x, estimatedTime: e.target.value } : x))}
+                            className="flex-1 sm:w-36 sm:flex-none"
+                          />
+                          <button type="button" onClick={() => setLocalMyRaces((arr) => arr.filter((_, j) => j !== i))}
+                            className="p-2 text-[#6B6B7E] hover:text-[#FF3B5C] transition-colors flex-shrink-0">
+                            <Trash2 className="w-3.5 h-3.5" />
                           </button>
                         </div>
-                        <Input
-                          placeholder="Race name (e.g. MW SS)"
-                          value={r.name}
-                          onChange={(e) => setLocalMyRaces((arr) => arr.map((x, j) => j === i ? { ...x, name: e.target.value } : x))}
-                          className="flex-1"
-                        />
-                        <Input
-                          placeholder="Time (e.g. 11:15 AM or TBD)"
-                          value={r.estimatedTime}
-                          onChange={(e) => setLocalMyRaces((arr) => arr.map((x, j) => j === i ? { ...x, estimatedTime: e.target.value } : x))}
-                          className="w-36"
-                        />
-                        <button type="button" onClick={() => setLocalMyRaces((arr) => arr.filter((_, j) => j !== i))}
-                          className="p-2 text-[#6B6B7E] hover:text-[#FF3B5C] transition-colors flex-shrink-0">
-                          <Trash2 className="w-3.5 h-3.5" />
-                        </button>
                       </div>
                     </div>
                   ))}
@@ -228,7 +232,7 @@ function RaceDetailContent({ raceId }: { raceId: string }) {
                 <div className="space-y-3">
                   {localItinerary.map((item, i) => (
                     <div key={i} className="p-3 bg-[#0a0a0f] rounded-xl border border-white/6 space-y-2">
-                      <div className="grid grid-cols-3 gap-2">
+                      <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
                         <Input placeholder="Time" value={item.time} onChange={(e) => setLocalItinerary((arr) => arr.map((x, j) => j === i ? { ...x, time: e.target.value } : x))} />
                         <Input placeholder="Title" value={item.title} onChange={(e) => setLocalItinerary((arr) => arr.map((x, j) => j === i ? { ...x, title: e.target.value } : x))} />
                         <div className="flex gap-1">

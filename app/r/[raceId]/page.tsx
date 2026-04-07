@@ -174,7 +174,7 @@ export default function GuestPage() {
                 <label className="block text-xs font-medium text-[#6B6B7E] uppercase tracking-wider mb-3">
                   First, what's your name?
                 </label>
-                <div className="flex gap-3">
+                <div className="flex flex-col sm:flex-row gap-3">
                   <div className="relative flex-1">
                     <User className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[#6B6B7E]" />
                     <input
@@ -187,7 +187,7 @@ export default function GuestPage() {
                     />
                   </div>
                   <button type="submit"
-                    className="flex items-center gap-2 px-5 py-3 bg-gradient-to-r from-[#FF4D00] to-[#ff6a20] text-white font-outfit font-600 rounded-xl hover:-translate-y-0.5 hover:shadow-[0_0_20px_rgba(255,77,0,0.35)] transition-all duration-200">
+                    className="w-full sm:w-auto flex items-center justify-center gap-2 px-5 py-3 bg-gradient-to-r from-[#FF4D00] to-[#ff6a20] text-white font-outfit font-600 rounded-xl hover:-translate-y-0.5 hover:shadow-[0_0_20px_rgba(255,77,0,0.35)] transition-all duration-200">
                     Continue <ChevronRight className="w-4 h-4" />
                   </button>
                 </div>

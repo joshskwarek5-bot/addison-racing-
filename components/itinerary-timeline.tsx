@@ -54,15 +54,15 @@ export function ItineraryTimeline({ items, showDayHeaders = true, className }: I
             )}
 
             <div className="relative space-y-0">
-              {/* Vertical line */}
-              <div className="absolute left-[5.5rem] top-3 bottom-3 w-px bg-white/8" />
+              {/* Vertical line — left: w-16 (time col) + gap-3 = 64+12 = 76px → use left-[4.75rem] */}
+              <div className="absolute left-[4.75rem] top-3 bottom-3 w-px bg-white/8" />
 
               {sorted.map((item, idx) => {
                 const cfg = TYPE_CONFIG[item.type];
                 return (
-                  <div key={idx} className="relative flex gap-4 pb-4 last:pb-0">
+                  <div key={idx} className="relative flex gap-3 pb-4 last:pb-0">
                     {/* Time */}
-                    <div className="w-20 flex-shrink-0 pt-1">
+                    <div className="w-16 flex-shrink-0 pt-1">
                       <span className="font-jetbrains text-xs text-[#6B6B7E] whitespace-nowrap">
                         {item.time}
                       </span>

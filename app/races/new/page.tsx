@@ -161,19 +161,19 @@ function NewRaceContent() {
             </div>
             <div className="space-y-3">
               {myRaces.map((r, i) => (
-                <div key={i} className="grid grid-cols-1 sm:grid-cols-4 gap-3 p-3 bg-[#0a0a0f] rounded-xl border border-white/6">
-                  <Input placeholder="Lightweight Supersport Race 1" value={r.name} onChange={(e) => setMyRaces((arr) => arr.map((x, j) => j === i ? { ...x, name: e.target.value } : x))} className="sm:col-span-2" />
-                  <Input placeholder="2:15 PM" value={r.estimatedTime} onChange={(e) => setMyRaces((arr) => arr.map((x, j) => j === i ? { ...x, estimatedTime: e.target.value } : x))} />
+                <div key={i} className="p-3 bg-[#0a0a0f] rounded-xl border border-white/6 space-y-2">
+                  <Input placeholder="e.g. MW SS" value={r.name} onChange={(e) => setMyRaces((arr) => arr.map((x, j) => j === i ? { ...x, name: e.target.value } : x))} />
                   <div className="flex gap-2">
+                    <Input placeholder="Time (e.g. 11:15 AM or TBD)" value={r.estimatedTime} onChange={(e) => setMyRaces((arr) => arr.map((x, j) => j === i ? { ...x, estimatedTime: e.target.value } : x))} className="flex-1" />
                     {dayOptions.length > 0 && (
                       <select value={r.day || startTs} onChange={(e) => setMyRaces((arr) => arr.map((x, j) => j === i ? { ...x, day: parseInt(e.target.value) } : x))}
-                        className="flex-1 bg-[#0a0a0f] border border-white/10 rounded-lg px-2 py-2.5 text-sm text-[#F0F0F5] focus:border-[#FF4D00]/50 transition-colors">
+                        className="bg-[#0a0a0f] border border-white/10 rounded-lg px-2 py-2.5 text-sm text-[#F0F0F5] focus:border-[#FF4D00]/50 transition-colors">
                         {dayOptions.map((d) => <option key={d.value} value={d.value}>{d.label}</option>)}
                       </select>
                     )}
                     {myRaces.length > 1 && (
                       <button type="button" onClick={() => setMyRaces((arr) => arr.filter((_, j) => j !== i))}
-                        className="p-2.5 text-[#6B6B7E] hover:text-[#FF3B5C] transition-colors">
+                        className="p-2.5 text-[#6B6B7E] hover:text-[#FF3B5C] transition-colors flex-shrink-0">
                         <Trash2 className="w-4 h-4" />
                       </button>
                     )}
@@ -194,9 +194,9 @@ function NewRaceContent() {
             <div className="space-y-3">
               {itinerary.map((item, i) => (
                 <div key={i} className="p-3 bg-[#0a0a0f] rounded-xl border border-white/6 space-y-3">
-                  <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
                     <Input placeholder="8:00 AM" value={item.time} onChange={(e) => setItinerary((arr) => arr.map((x, j) => j === i ? { ...x, time: e.target.value } : x))} />
-                    <Input placeholder="Gates Open" value={item.title} onChange={(e) => setItinerary((arr) => arr.map((x, j) => j === i ? { ...x, title: e.target.value } : x))} className="sm:col-span-2" />
+                    <Input placeholder="Gates Open" value={item.title} onChange={(e) => setItinerary((arr) => arr.map((x, j) => j === i ? { ...x, title: e.target.value } : x))} />
                     <div className="flex gap-2">
                       <select value={item.type} onChange={(e) => setItinerary((arr) => arr.map((x, j) => j === i ? { ...x, type: e.target.value } : x))}
                         className="flex-1 bg-[#0a0a0f] border border-white/10 rounded-lg px-2 py-2.5 text-sm text-[#F0F0F5] focus:border-[#FF4D00]/50 transition-colors">
@@ -204,7 +204,7 @@ function NewRaceContent() {
                       </select>
                       {itinerary.length > 1 && (
                         <button type="button" onClick={() => setItinerary((arr) => arr.filter((_, j) => j !== i))}
-                          className="p-2.5 text-[#6B6B7E] hover:text-[#FF3B5C] transition-colors">
+                          className="p-2.5 text-[#6B6B7E] hover:text-[#FF3B5C] transition-colors flex-shrink-0">
                           <Trash2 className="w-4 h-4" />
                         </button>
                       )}
