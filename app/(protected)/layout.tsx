@@ -6,8 +6,12 @@ export default async function ProtectedLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const { userId } = await auth();
-  if (!userId) {
+  try {
+    const { userId } = await auth();
+    if (!userId) {
+      redirect("/sign-in");
+    }
+  } catch {
     redirect("/sign-in");
   }
   return <>{children}</>;
